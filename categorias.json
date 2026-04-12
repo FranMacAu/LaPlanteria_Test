@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "nombre": "Plantas de Interior",
+    "cuidadosEspeciales": true
+  },
+  {
+    "id": 2,
+    "nombre": "Macetas y Deco",
+    "cuidadosEspeciales": false
+  },
+  {
+    "id": 3,
+    "nombre": "Sustratos y Fertilizantes",
+    "cuidadosEspeciales": false
+  },
+  {
+    "id": 4,
+    "nombre": "Herramientas",
+    "cuidadosEspeciales": false
+  }
+]

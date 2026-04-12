@@ -1,0 +1,12 @@
+[
+  {"id": 501, "id_usuario": 1, "fecha": "2026-04-01", "total": 17000.00, "direccion": "Av. Colón 123", "envioADomicilio": true, "productos": [101, 102]},
+  {"id": 502, "id_usuario": 2, "fecha": "2026-04-02", "total": 3200.00, "direccion": "General Paz 450", "envioADomicilio": false, "productos": [103]},
+  {"id": 503, "id_usuario": 3, "fecha": "2026-04-03", "total": 12500.00, "direccion": "Belgrano 900", "envioADomicilio": true, "productos": [101]},
+  {"id": 504, "id_usuario": 4, "fecha": "2026-04-04", "total": 14300.50, "direccion": "Caseros 12", "envioADomicilio": true, "productos": [102, 105]},
+  {"id": 505, "id_usuario": 1, "fecha": "2026-04-05", "total": 6400.00, "direccion": "Av. Colón 123", "envioADomicilio": false, "productos": [103, 103]},
+  {"id": 506, "id_usuario": 2, "fecha": "2026-04-06", "total": 9800.00, "direccion": "General Paz 450", "envioADomicilio": true, "productos": [105]},
+  {"id": 507, "id_usuario": 3, "fecha": "2026-04-07", "total": 4500.50, "direccion": "Belgrano 900", "envioADomicilio": false, "productos": [102]},
+  {"id": 508, "id_usuario": 4, "fecha": "2026-04-08", "total": 25000.50, "direccion": "Caseros 12", "envioADomicilio": true, "productos": [101, 101, 103]},
+  {"id": 509, "id_usuario": 1, "fecha": "2026-04-09", "total": 3200.00, "direccion": "Av. Colón 123", "envioADomicilio": false, "productos": [103]},
+  {"id": 510, "id_usuario": 3, "fecha": "2026-04-10", "total": 19500.50, "direccion": "Belgrano 900", "envioADomicilio": true, "productos": [101, 102, 103]}
+]

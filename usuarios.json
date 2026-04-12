@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "nombre": "Francisco",
+    "apellido": "Gomez",
+    "email": "fran.vivero@mail.com",
+    "contrasena": "pass123",
+    "esSocio": true
+  },
+  {
+    "id": 2,
+    "nombre": "Mariana",
+    "apellido": "López",
+    "email": "marian.p@mail.com",
+    "contrasena": "flor2026",
+    "esSocio": false
+  },
+  {
+    "id": 3,
+    "nombre": "Roberto",
+    "apellido": "Sánchez",
+    "email": "rober.jardin@mail.com",
+    "contrasena": "verdeFuerte!",
+    "esSocio": true
+  },
+  {
+    "id": 4,
+    "nombre": "Lucía",
+    "apellido": "Torres",
+    "email": "lu.torres@mail.com",
+    "contrasena": "abril26",
+    "esSocio": false
+  }
+]
