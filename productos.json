@@ -5,8 +5,11 @@
     "nombre": "Monstera Deliciosa",
     "desc": "Planta de interior, hojas grandes con fenestraciones",
     "precio": 12500.00,
-    "imagen": "monstera.jpg",
-    "enStock": true
+    "imagen": "/public/images/monstera.webp",
+    "stock": 10,
+    "envio_gratis": true,
+    "porcentaje_descuento": 10,
+    "destacado": true
   },
   {
     "id": 102,
@@ -14,8 +17,11 @@
     "nombre": "Maceta Terracota N18",
     "desc": "Maceta de barro cocido artesanal",
     "precio": 4500.50,
-    "imagen": "maceta-terra.jpg",
-    "enStock": true
+    "imagen": "/public/images/maceta-terra.webp",
+    "stock": 5,
+    "envio_gratis": true,
+    "porcentaje_descuento": 0,
+    "destacado": false
   },
   {
     "id": 103,
@@ -23,8 +29,11 @@
     "nombre": "Sustrato Universal 5L",
     "desc": "Mezcla de turba, perlita y compost",
     "precio": 3200.00,
-    "imagen": "sustrato.jpg",
-    "enStock": true
+    "imagen": "/public/images/sustrato.jpeg",
+    "stock": 20,
+    "envio_gratis": true,
+    "porcentaje_descuento": 0,
+    "destacado": false
   },
   {
     "id": 104,
@@ -32,8 +41,11 @@
     "nombre": "Orquídea Phalaenopsis",
     "desc": "Flor blanca, ideal para regalo",
     "precio": 18000.00,
-    "imagen": "orquidea.jpg",
-    "enStock": false
+    "imagen": "/public/images/orquidea.jpeg",
+    "stock": 0,
+    "envio_gratis": false,
+    "porcentaje_descuento": 0,
+    "destacado": false
   },
   {
     "id": 105,
@@ -41,7 +53,10 @@
     "nombre": "Kit de Herramientas",
     "desc": "Pala, rastrillo y trasplantador de acero",
     "precio": 9800.00,
-    "imagen": "kit-jardin.jpg",
-    "enStock": true
+    "imagen": "/public/images/kit-jardin.webp",
+    "stock": 15,
+    "envio_gratis": true,
+    "porcentaje_descuento": 0,
+    "destacado": false
   }
 ]
