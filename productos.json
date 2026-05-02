@@ -75,7 +75,7 @@
     "id": 112,
     "id_categoria": 4,
     "desc": "Producto de prueba - POST",
-    "precio": 9800,
+    "precio": 1,
     "imagen": "/public/images/default.webp",
     "envio_gratis": false,
     "destacado": false

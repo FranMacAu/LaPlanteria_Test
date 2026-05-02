@@ -64,8 +64,7 @@ router.post('/', async (req, res) => {
 
 // Modificar precio de un producto
 router.put('/cambiarPrecio', async (req, res) => {
-    const id = req.body.id;
-    const { precioNuevo } = req.body.nuevo_precio;
+    const { id, precioNuevo } = req.body;
 
     const producto = productos.find(p => p.id === id);
     if (!producto) {
@@ -73,20 +72,13 @@ router.put('/cambiarPrecio', async (req, res) => {
     }
 
     try{
-        const index = productos.findIndex(p => p.id === id);
-
-        productos[index].precio = precioNuevo;
+        producto.precio = precioNuevo;
         await writeFile('./productos.json', JSON.stringify(productos, null, 2));
         return res.status(200).json({ message: 'Precio del producto actualizado' });
     } catch (error) {
         console.error('Error al actualizar el precio del producto:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
-    producto.precio = precio;
-    await writeFile('./productos.json', JSON.stringify(productos));
-
-    res.status(200).json(producto);
 });
 
 // Modificar descuento de un producto
@@ -100,26 +92,18 @@ router.put('/cambiarDescuento', async (req, res) => {
     }
 
     try{
-        const index = productos.findIndex(p => p.id === id);
-
-        productos[index].porcentaje_descuento = descuentoNuevo;
+        producto.porcentaje_descuento = descuentoNuevo;
         await writeFile('./productos.json', JSON.stringify(productos, null, 2));
         return res.status(200).json({ message: 'Descuento del producto actualizado' });
     } catch (error) {
         console.error('Error al actualizar el descuento del producto:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
-    producto.precio = precio;
-    await writeFile('./productos.json', JSON.stringify(productos));
-
-    res.status(200).json(producto);
 });
 
 // Modificar nombre de un producto
 router.put('/cambiarNombre', async (req, res) => {
-    const id = req.body.id;
-    const { nombreNuevo } = req.body.nombreNuevo;
+    const { id, nombreNuevo } = req.body;
 
     const producto = productos.find(p => p.id === id);
     if (!producto) {
@@ -127,26 +111,18 @@ router.put('/cambiarNombre', async (req, res) => {
     }
 
     try{
-        const index = productos.findIndex(p => p.id === id);
-
-        productos[index].nombre = nombreNuevo;
+        producto.nombre = nombreNuevo;
         await writeFile('./productos.json', JSON.stringify(productos, null, 2));
         return res.status(200).json({ message: 'Nombre del producto actualizado' });
     } catch (error) {
         console.error('Error al actualizar el nombre del producto:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
-    producto.precio = precio;
-    await writeFile('./productos.json', JSON.stringify(productos));
-
-    res.status(200).json(producto);
 });
 
 // Modificar descripción de un producto
 router.put('/cambiarDescripcion', async (req, res) => {
-    const id = req.body.id;
-    const { descripcionNueva } = req.body.descripcionNueva;
+    const { id, descripcionNueva } = req.body;
 
     const producto = productos.find(p => p.id === id);
     if (!producto) {
@@ -154,26 +130,18 @@ router.put('/cambiarDescripcion', async (req, res) => {
     }
 
     try{
-        const index = productos.findIndex(p => p.id === id);
-
-        productos[index].descripcion = descripcionNueva;
+        productodescripcion = descripcionNueva;
         await writeFile('./productos.json', JSON.stringify(productos, null, 2));
         return res.status(200).json({ message: 'Descripción del producto actualizada' });
     } catch (error) {
         console.error('Error al actualizar la descripción del producto:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
-    producto.precio = precio;
-    await writeFile('./productos.json', JSON.stringify(productos));
-
-    res.status(200).json(producto);
 });
 
 // Modificar stock de un producto
 router.put('/cambiarStock', async (req, res) => {
-    const id = req.body.id;
-    const { stockNuevo } = req.body.stockNuevo;
+    const { id, stockNuevo } = req.body;
 
     const producto = productos.find(p => p.id === id);
     if (!producto) {
@@ -181,9 +149,7 @@ router.put('/cambiarStock', async (req, res) => {
     }
 
     try{
-        const index = productos.findIndex(p => p.id === id);
-
-        productos[index].stock = stockNuevo;
+        producto.stock = stockNuevo;
         if (stockNuevo < 0) {
             stockNuevo = 0;
         }
@@ -193,11 +159,6 @@ router.put('/cambiarStock', async (req, res) => {
         console.error('Error al actualizar el stock del producto:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
-    producto.precio = precio;
-    await writeFile('./productos.json', JSON.stringify(productos));
-
-    res.status(200).json(producto);
 });
 
 // Eliminar un producto (verificación con ventas)
@@ -233,7 +194,7 @@ router.delete('/:id', async (req, res) => {
     catch (error) {
         console.error('Error al eliminar el producto:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
-        }
+    }
 });
 
 export default router;
