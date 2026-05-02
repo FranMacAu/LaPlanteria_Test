@@ -22,7 +22,7 @@ Colegio Universitario IES 21
 
 - GET /usuarios/	-- obtiene lista completa
 - GET /usuarios/:id	-- obtiene usuario por id
-- POST /usuarios (en el body va email y password)	-- valida usuario+pasword
+- POST /usuarios/login (en el body va email y password)	-- valida usuario+pasword
 
 -En PRODUCTOS.ROUTES.JS hay 3 GET para obtener productos, 1 POST para crear uno nuevo, 4 PUT para modificar productos y 1 DELETE con integridad de datos
 
