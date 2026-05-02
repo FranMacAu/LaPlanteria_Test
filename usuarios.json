@@ -4,7 +4,7 @@
     "nombre": "Francisco",
     "apellido": "Gomez",
     "email": "fran.vivero@mail.com",
-    "contrasena": "pass123",
+    "password": "pass123",
     "esSocio": true
   },
   {
@@ -12,7 +12,7 @@
     "nombre": "Mariana",
     "apellido": "López",
     "email": "marian.p@mail.com",
-    "contrasena": "flor2026",
+    "password": "flor2026",
     "esSocio": false
   },
   {
@@ -20,7 +20,7 @@
     "nombre": "Roberto",
     "apellido": "Sánchez",
     "email": "rober.jardin@mail.com",
-    "contrasena": "verdeFuerte!",
+    "password": "verdeFuerte!",
     "esSocio": true
   },
   {
@@ -28,7 +28,7 @@
     "nombre": "Lucía",
     "apellido": "Torres",
     "email": "lu.torres@mail.com",
-    "contrasena": "abril26",
+    "password": "abril26",
     "esSocio": false
   }
 ]

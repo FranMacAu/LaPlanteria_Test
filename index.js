@@ -1,15 +1,24 @@
-import e from 'express'
+//import e from 'express'
 import express from 'express'
 import { readFile, writeFile } from 'fs/promises'
 
+import productRouter from './routes/productos.routes.js'
+import userRouter from './routes/usuarios.routes.js'
+
 const app = express()
 const PORT = 3000;
+
+// Middleware para que Express entienda JSON en el cuerpo de las peticiones
+app.use(express.json())
+
+// Inicio de servidor
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`);
 });
 
-// Middleware para que Express entienda JSON en el cuerpo de las peticiones
-app.use(express.json())
+app.use('/usuarios', userRouter);
+app.use('/productos', productRouter);
+
 
 // Lectura de archivos JSON 
 const productosData = await readFile('./productos.json', 'utf-8');
