@@ -13,8 +13,8 @@ Colegio Universitario IES 21
 **ENTREGA 01/05**
 
 **--Cambios en Estructura de Datos**
--se adaptó estructura de ventas para que quede el precio de la venta en ese momento y no se actualice el monto con una actualización posterior del producto
--Se creó carpeta independiente con las rutas para la modularización
+- Se adaptó estructura de ventas para que quede el precio de la venta en ese momento y no se actualice el monto con una actualización posterior del producto
+- Se creó carpeta independiente con las rutas para la modularización
 
 **--ENDPOINTS implementados**
 
