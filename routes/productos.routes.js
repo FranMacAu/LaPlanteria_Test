@@ -119,7 +119,7 @@ router.put('/cambiarDescuento', async (req, res) => {
 // Modificar nombre de un producto
 router.put('/cambiarNombre', async (req, res) => {
     const id = req.body.id;
-    const { nombreNuevo } = req.body.nuevo_nombre;
+    const { nombreNuevo } = req.body.nombreNuevo;
 
     const producto = productos.find(p => p.id === id);
     if (!producto) {

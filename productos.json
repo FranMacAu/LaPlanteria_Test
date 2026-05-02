@@ -74,7 +74,6 @@
   {
     "id": 112,
     "id_categoria": 4,
-    "nombre": "Kit de Herramientas",
     "desc": "Producto de prueba - POST",
     "precio": 9800,
     "imagen": "/public/images/default.webp",

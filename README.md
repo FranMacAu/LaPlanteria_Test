@@ -33,5 +33,7 @@ POST /productos/ (en el body va, como mínimo, nombre, precio y id_categoría) -
 PUT /productos/cambiarPrecio (en el body va id y precioNuevo)	-- Actualiza el precio de un producto
 PUT /productos/cambiarDescripcion (en el body va id y descripcionNueva)	-- Actualiza a descripción de un producto
 PUT /productos/cambiarStock (en el body va id y stockNuevo)	-- Actualiza el stock de un producto
+PUT /productos/cambiarNombre (en el body va id y nombreNuevo)	-- Actualiza el nombre de un producto
+PUT /productos/cambiarDescripcion (en el body va id y descripcionNueva)	-- Actualiza la descripción de un producto
 DELETE /productos/:id  (verifica que el producto a eliminar no esté incluido en alguna venta) -- Elimina un producto por id siempre y cuando ese id no esté en alguna venta realizada
 *************************************
