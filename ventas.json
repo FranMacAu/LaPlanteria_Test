@@ -3,119 +3,230 @@
     "id": 501,
     "id_usuario": 1,
     "fecha": "2026-04-01",
-    "total": 17000.00,
+    "total": 17000,
     "direccion": "Av. Colón 123",
     "envioADomicilio": true,
     "productos": [
-    { "id_producto": 101, "cantidad": 1, "precio_unitario": 12500.00 },
-    { "id_producto": 102, "cantidad": 2, "precio_unitario": 2250.00 }
-  ]
+      {
+        "id_producto": 101,
+        "cantidad": 1,
+        "precio_unitario": 12500
+      },
+      {
+        "id_producto": 102,
+        "cantidad": 2,
+        "precio_unitario": 2250
+      }
+    ]
   },
   {
     "id": 502,
     "id_usuario": 2,
     "fecha": "2026-04-02",
-    "total": 3200.00,
+    "total": 3200,
     "direccion": "General Paz 450",
     "envioADomicilio": false,
     "productos": [
-      { "id_producto": 103, "cantidad": 1, "precio_unitario": 3200.00 }
+      {
+        "id_producto": 103,
+        "cantidad": 1,
+        "precio_unitario": 3200
+      }
     ]
   },
   {
     "id": 503,
     "id_usuario": 3,
     "fecha": "2026-04-03",
-    "total": 12500.00,
+    "total": 12500,
     "direccion": "Belgrano 900",
     "envioADomicilio": true,
     "productos": [
-      { "id_producto": 101, "cantidad": 1, "precio_unitario": 12500.00 }
+      {
+        "id_producto": 101,
+        "cantidad": 1,
+        "precio_unitario": 12500
+      }
     ]
   },
   {
     "id": 504,
     "id_usuario": 4,
     "fecha": "2026-04-04",
-    "total": 14300.50,
+    "total": 14300.5,
     "direccion": "Caseros 12",
     "envioADomicilio": true,
     "productos": [
-      { "id_producto": 102, "cantidad": 1, "precio_unitario": 2250.00 },
-      { "id_producto": 103, "cantidad": 2, "precio_unitario": 3200.00 },
-      { "id_producto": 105, "cantidad": 1, "precio_unitario": 9800.00 }
+      {
+        "id_producto": 102,
+        "cantidad": 1,
+        "precio_unitario": 2250
+      },
+      {
+        "id_producto": 103,
+        "cantidad": 2,
+        "precio_unitario": 3200
+      },
+      {
+        "id_producto": 105,
+        "cantidad": 1,
+        "precio_unitario": 9800
+      }
     ]
   },
   {
     "id": 505,
     "id_usuario": 1,
     "fecha": "2026-04-05",
-    "total": 6400.00,
+    "total": 6400,
     "direccion": "Av. Colón 123",
     "envioADomicilio": false,
     "productos": [
-      { "id_producto": 103, "cantidad": 1, "precio_unitario": 3200.00 },
-      { "id_producto": 102, "cantidad": 1, "precio_unitario": 2250.00 }
+      {
+        "id_producto": 103,
+        "cantidad": 1,
+        "precio_unitario": 3200
+      },
+      {
+        "id_producto": 102,
+        "cantidad": 1,
+        "precio_unitario": 2250
+      }
     ]
   },
   {
     "id": 506,
     "id_usuario": 2,
     "fecha": "2026-04-06",
-    "total": 9800.00,
+    "total": 9800,
     "direccion": "General Paz 450",
     "envioADomicilio": true,
     "productos": [
-      { "id_producto": 105, "cantidad": 1, "precio_unitario": 9800.00 }
+      {
+        "id_producto": 105,
+        "cantidad": 1,
+        "precio_unitario": 9800
+      }
     ]
   },
   {
     "id": 507,
     "id_usuario": 3,
     "fecha": "2026-04-07",
-    "total": 4500.50,
+    "total": 4500.5,
     "direccion": "Belgrano 900",
     "envioADomicilio": false,
     "productos": [
-      { "id_producto": 102, "cantidad": 1, "precio_unitario": 2250.00 }
+      {
+        "id_producto": 102,
+        "cantidad": 1,
+        "precio_unitario": 2250
+      }
     ]
   },
   {
     "id": 508,
     "id_usuario": 4,
     "fecha": "2026-04-08",
-    "total": 25000.50,
+    "total": 25000.5,
     "direccion": "Caseros 12",
     "envioADomicilio": true,
     "productos": [
-      { "id_producto": 101, "cantidad": 1, "precio_unitario": 12500.00 },
-      { "id_producto": 102, "cantidad": 1, "precio_unitario": 2250.00 },
-      { "id_producto": 103, "cantidad": 1, "precio_unitario": 3200.00 }
+      {
+        "id_producto": 101,
+        "cantidad": 1,
+        "precio_unitario": 12500
+      },
+      {
+        "id_producto": 102,
+        "cantidad": 1,
+        "precio_unitario": 2250
+      },
+      {
+        "id_producto": 103,
+        "cantidad": 1,
+        "precio_unitario": 3200
+      }
     ]
   },
   {
     "id": 509,
     "id_usuario": 1,
     "fecha": "2026-04-09",
-    "total": 3200.00,
+    "total": 3200,
     "direccion": "Av. Colón 123",
     "envioADomicilio": false,
     "productos": [
-      { "id_producto": 103, "cantidad": 1, "precio_unitario": 3200.00 }
+      {
+        "id_producto": 103,
+        "cantidad": 1,
+        "precio_unitario": 3200
+      }
     ]
   },
   {
     "id": 510,
     "id_usuario": 3,
     "fecha": "2026-04-10",
-    "total": 19500.50,
+    "total": 19500.5,
     "direccion": "Belgrano 900",
     "envioADomicilio": true,
     "productos": [
-      { "id_producto": 101, "cantidad": 1, "precio_unitario": 12500.00 }, 
-      { "id_producto": 102, "cantidad": 1, "precio_unitario": 2250.00 },
-      { "id_producto": 103, "cantidad": 1, "precio_unitario": 3200.00 },
-      { "id_producto": 105, "cantidad": 1, "precio_unitario": 9800.00 }
+      {
+        "id_producto": 101,
+        "cantidad": 1,
+        "precio_unitario": 12500
+      },
+      {
+        "id_producto": 102,
+        "cantidad": 1,
+        "precio_unitario": 2250
+      },
+      {
+        "id_producto": 103,
+        "cantidad": 1,
+        "precio_unitario": 3200
+      },
+      {
+        "id_producto": 105,
+        "cantidad": 1,
+        "precio_unitario": 9800
+      }
+    ]
+  },
+  {
+    "id": 511,
+    "usuario_email": "invitado@planteria.com",
+    "fecha": "2026-05-17",
+    "total": 12500,
+    "direccion": "Retiro en sucursal / A convenir",
+    "envioADomicilio": false,
+    "productos": [
+      {
+        "id_producto": 101,
+        "cantidad": 1,
+        "precio_unitario": 12500
+      }
+    ]
+  },
+  {
+    "id": 512,
+    "usuario_email": "invitado@planteria.com",
+    "fecha": "2026-05-17",
+    "total": 18200,
+    "direccion": "Retiro en sucursal / A convenir",
+    "envioADomicilio": false,
+    "productos": [
+      {
+        "id_producto": 113,
+        "cantidad": 1,
+        "precio_unitario": 15000
+      },
+      {
+        "id_producto": 103,
+        "cantidad": 1,
+        "precio_unitario": 3200
+      }
     ]
   }
 ]

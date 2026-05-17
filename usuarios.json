@@ -30,5 +30,13 @@
     "email": "lu.torres@mail.com",
     "password": "abril26",
     "esSocio": false
+  },
+  {
+    "id": 5,
+    "nombre": "prueba",
+    "apellido": "registro",
+    "email": "prueba@registro",
+    "password": "pass1231",
+    "esSocio": false
   }
 ]

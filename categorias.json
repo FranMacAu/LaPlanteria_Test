@@ -5,6 +5,16 @@
     "cuidadosEspeciales": true
   },
   {
+    "id": 5,     
+    "nombre": "Plantas de Exterior",
+    "cuidadosEspeciales": false
+  },
+  {
+    "id": 6,
+    "nombre": "Crasas y Suculentas",
+    "cuidadosEspeciales": false
+  },
+  {
     "id": 2,
     "nombre": "Macetas y Deco",
     "cuidadosEspeciales": false
