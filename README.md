@@ -30,9 +30,12 @@ Colegio Universitario IES 21
 - Al finalizar compra en el carrito, se envían los datos al back y se genera el JSON de la venta
 
 **--Despliegue y configuración**
+
 El proyecto del front está subido a Vercel (https://appweb-two.vercel.app), por lo que se configuró el CORS para que también se pueda consumir el backend desde esa url (solo hay que iniciar el servidor en el localhost).
 - Puertos configurados:
+
 Backend:  3000
+
 Frontend: 5500 o https://appweb-two.vercel.app
 
 Para probar el funcionamiento desde la web, solo es necesario correr el servidor backend corriendo en el puerto 3000.
