@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     try {
-        const categoriasData = await readFile('./categorias.json', 'utf-8');
+        const categoriasData = await readFile('./data/categorias.json', 'utf-8');
         const categorias = JSON.parse(categoriasData);
         res.status(200).json(categorias);
     } catch (error) {

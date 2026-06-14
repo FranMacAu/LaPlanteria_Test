@@ -1,5 +1,6 @@
 # Dependencias de Node.js
 node_modules/
+.pnpm-debug.log
 
 # Directorio de dependencias generadas por npm
 package-lock.json

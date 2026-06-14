@@ -2,7 +2,7 @@ import { Router } from "express";
 import { readFile, writeFile } from 'fs/promises'
 
 //Lectura del JSON
-const usuariosData = await readFile('./usuarios.json', 'utf-8');
+const usuariosData = await readFile('./data/usuarios.json', 'utf-8');
 const usuarios = JSON.parse(usuariosData);
 
 const router = Router();

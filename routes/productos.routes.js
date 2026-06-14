@@ -2,7 +2,7 @@ import { Router } from "express";
 import { readFile, writeFile } from 'fs/promises'
 
 //Lectura del JSON
-const productosData = await readFile('./productos.json', 'utf-8');
+const productosData = await readFile('./data/productos.json', 'utf-8');
 let productos = JSON.parse(productosData);
 
 const router = Router();

@@ -45,16 +45,16 @@ app.use('/categorias', categoriasRouter);
 app.use('/ventas', ventasRoutes);
 
 // Lectura de archivos JSON 
-const productosData = await readFile('./productos.json', 'utf-8');
+const productosData = await readFile('./data/productos.json', 'utf-8');
 const productos = JSON.parse(productosData);
 
-const categoriasData = await readFile('./categorias.json', 'utf-8');
+const categoriasData = await readFile('./data/categorias.json', 'utf-8');
 const categorias = JSON.parse(categoriasData);
 
-const usuariosData = await readFile('./usuarios.json', 'utf-8');
+const usuariosData = await readFile('./data/usuarios.json', 'utf-8');
 const usuarios = JSON.parse(usuariosData);
 
-const ventasData = await readFile('./ventas.json', 'utf-8');
+const ventasData = await readFile('./data/ventas.json', 'utf-8');
 const ventas = JSON.parse(ventasData);
 
 app.get('/', (req, res) => {

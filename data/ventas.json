@@ -228,5 +228,40 @@
         "precio_unitario": 3200
       }
     ]
+  },
+  {
+    "id": 513,
+    "usuario_email": "prueba@estructura",
+    "fecha": "2026-05-25",
+    "total": 15000,
+    "direccion": "Retiro en sucursal / A convenir",
+    "envioADomicilio": false,
+    "productos": [
+      {
+        "id_producto": 113,
+        "cantidad": 1,
+        "precio_unitario": 15000
+      }
+    ]
+  },
+  {
+    "id": 514,
+    "usuario_email": "invitado@planteria.com",
+    "fecha": "2026-05-25",
+    "total": 84500,
+    "direccion": "Retiro en sucursal / A convenir",
+    "envioADomicilio": false,
+    "productos": [
+      {
+        "id_producto": 101,
+        "cantidad": 1,
+        "precio_unitario": 12500
+      },
+      {
+        "id_producto": 104,
+        "cantidad": 4,
+        "precio_unitario": 18000
+      }
+    ]
   }
 ]

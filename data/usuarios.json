@@ -38,5 +38,21 @@
     "email": "prueba@registro",
     "password": "pass1231",
     "esSocio": false
+  },
+  {
+    "id": 6,
+    "nombre": "Prueba",
+    "apellido": "Registro",
+    "email": "prueba@1234",
+    "password": "pass1234",
+    "esSocio": false
+  },
+  {
+    "id": 7,
+    "nombre": "entrega",
+    "apellido": "tres",
+    "email": "prueba@estructura",
+    "password": "12345678",
+    "esSocio": false
   }
 ]
