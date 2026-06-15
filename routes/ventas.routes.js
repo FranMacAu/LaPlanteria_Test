@@ -47,4 +47,18 @@ router.post('/', verificarToken, async (req, res) => {
     }
 });
 
+// Obtener todas las ventas (solo para pruebas)
+router.get('/', async (req, res) => {
+    try {
+        // Buscamos todas las ventas registradas en la colección
+        const ventas = await Venta.find({});
+        
+        // Si no hay ventas, podemos devolver un array vacío tranquilamente
+        return res.status(200).json(ventas);
+    } catch (error) {
+        console.error("Error al obtener las ventas:", error);
+        return res.status(500).json({ error: "Error interno al obtener el historial de ventas." });
+    }
+});
+
 export default router;

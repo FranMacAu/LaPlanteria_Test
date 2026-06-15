@@ -1,175 +1,155 @@
 import { Router } from "express";
-import { readFile, writeFile } from 'fs/promises'
-
-//Lectura del JSON
-const productosData = await readFile('./data/productos.json', 'utf-8');
-let productos = JSON.parse(productosData);
+import Producto from '../models/Producto.js'; 
+import Venta from '../models/Venta.js'; 
 
 const router = Router();
 
-// consultar todosls productos
-router.get('/', (req, res) => {
-    res.json(productos);
-});
-
-// Consultar un producto por ID
-router.get('/:producto', async (req, res) => {
-    const id = parseInt(req.params.producto);
-    const producto = productos.find(p => p.id === id);
-    if (!producto) {
-        return res.status(404).json({ error: 'Producto no encontrado' });
+// Consultar todos los productos
+router.get('/', async (req, res) => {
+    try {
+        const productos = await Producto.find({});
+        res.status(200).json(productos);
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
-    res.status(200).json(producto);
 });
 
-// Consultar productos por categoria
+// Consultar un producto por ID numérico
+router.get('/:producto', async (req, res) => {
+    const idProducto = parseInt(req.params.producto);
+    
+    if (isNaN(idProducto)) {
+        return res.status(400).json({ error: 'El ID debe ser un número válido' });
+    }
+
+    try {
+        const producto = await Producto.findOne({ id: idProducto });
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
+        }
+        res.status(200).json(producto);
+    } catch (error) {
+        console.error('Error al obtener producto por ID:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Consultar productos por categoría
 router.get('/categoria/:categoria', async (req, res) => {
-    const categoria = req.params.categoria.toLowerCase();
-    const productosCategoria = productos.filter(p => p.categoria.toLowerCase() === categoria);
-    res.status(200).json(productosCategoria);
+    const categoriaBuscada = req.params.categoria;
+    
+    try {
+        // Usamos una expresión regular ($regex) para ignorar mayúsculas y minúsculas ('i')
+        const productosCategoria = await Producto.find({ 
+            categoria: { $regex: new RegExp(`^${categoriaBuscada}$`, 'i') } 
+        });
+        
+        res.status(200).json(productosCategoria);
+    } catch (error) {
+        console.error('Error al buscar por categoría:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 });
 
-// Crear producto
+// Crear un nuevo producto
 router.post('/', async (req, res) => {
     const { id_categoria, nombre, desc, precio, imagen, stock, envio_gratis, porcentaje_descuento, destacado } = req.body;
-    //validar contar con datos mínimos
+    
+    // Validar contar con datos mínimos
     if (!nombre || !precio || !id_categoria) {
         return res.status(400).json({ message: "Faltan datos obligatorios (nombre, precio o categoría)" });
     }
     
-    // crear producto (algunos campos no son obligatorios por lo que tienen default)
-   const nuevoProducto = {
-        id: productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 101, // Empezamos en 101 como tus otros IDs
-        id_categoria,
-        nombre,
-        desc: desc || 0,
-        precio,
-        imagen: imagen || "/public/images/default.webp", // Imagen por defecto si no mandan una
-        stock: stock || 0,
-        envio_gratis: envio_gratis || false,
-        porcentaje_descuento: porcentaje_descuento || 0,
-        destacado: destacado || false
-    };
-    // se guarda en la ram
-    productos.push(nuevoProducto);
-    // se sobreescribe el archivo json(controlando excepciones)
     try {
-        await writeFile('./productos.json', JSON.stringify(productos, null, 2));   // formatea el json para que quede legible
-        res.status(201).json(nuevoProducto);
+        // Buscar el ID más alto actual en MongoDB para autoincrementar
+        const ultimoProducto = await Producto.findOne().sort({ id: -1 });
+        const nuevoId = (ultimoProducto && ultimoProducto.id) ? ultimoProducto.id + 1 : 101;
+
+        // Instanciar el nuevo producto con Mongoose
+        const nuevoProducto = new Producto({
+            id: nuevoId,
+            id_categoria,
+            nombre,
+            desc: desc || "",
+            precio,
+            imagen: imagen || "/public/images/default.webp",
+            stock: stock || 0,
+            envio_gratis: envio_gratis || false,
+            porcentaje_descuento: porcentaje_descuento || 0,
+            destacado: destacado || false
+        });
+
+        // Guardar físicamente en la base de datos
+        const productoGuardado = await nuevoProducto.save();
+        res.status(201).json(productoGuardado);
+        
     } catch (error) {
-        console.error('Error al guardar el nuevo producto:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-});
-
-// Modificar precio de un producto
-router.put('/cambiarPrecio', async (req, res) => {
-    const { id, precioNuevo } = req.body;
-
-    const producto = productos.find(p => p.id === id);
-    if (!producto) {
-        return res.status(404).json({ error: 'Producto no encontrado' });
-    }
-
-    try{
-        producto.precio = precioNuevo;
-        await writeFile('./productos.json', JSON.stringify(productos, null, 2));
-        return res.status(200).json({ message: 'Precio del producto actualizado' });
-    } catch (error) {
-        console.error('Error al actualizar el precio del producto:', error);
-        return res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al guardar el nuevo producto en MongoDB:', error);
+        res.status(500).json({ message: 'Error interno del servidor al crear producto' });
     }
 });
 
 // Modificar descuento de un producto
 router.put('/cambiarDescuento', async (req, res) => {
-    const id = req.body.id;
-    const { descuentoNuevo } = req.body.nuevoDescuento;
+    const id = parseInt(req.body.id);
+    const descuentoNuevo = parseFloat(req.body.descuentoNuevo);
 
-    const producto = productos.find(p => p.id === id);
-    if (!producto) {
-        return res.status(404).json({ error: 'Producto no encontrado' });
+    if (isNaN(id) || isNaN(descuentoNuevo) || descuentoNuevo < 0 || descuentoNuevo > 100) {
+        return res.status(400).json({ error: 'El ID y el descuento deben ser números válidos (entre 0 y 100).' });
     }
 
-    try{
-        producto.porcentaje_descuento = descuentoNuevo;
-        await writeFile('./productos.json', JSON.stringify(productos, null, 2));
-        return res.status(200).json({ message: 'Descuento del producto actualizado' });
+    try {
+        const productoActualizado = await Producto.findOneAndUpdate(
+            { id: id },
+            { porcentaje_descuento: descuentoNuevo },
+            { new: true }
+        );
+
+        if (!productoActualizado) {
+            return res.status(404).json({ error: 'Producto no encontrado en MongoDB' });
+        }
+
+        return res.status(200).json({ 
+            message: 'Descuento del producto actualizado', 
+            producto: productoActualizado 
+        });
     } catch (error) {
-        console.error('Error al actualizar el descuento del producto:', error);
+        console.error('Error al actualizar el descuento:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
 
 // Modificar nombre de un producto
 router.put('/cambiarNombre', async (req, res) => {
-    const { id, nombreNuevo } = req.body;
+    const id = parseInt(req.body.id);
+    const { nombreNuevo } = req.body;
 
-    const producto = productos.find(p => p.id === id);
-    if (!producto) {
-        return res.status(404).json({ error: 'Producto no encontrado' });
+    if (isNaN(id) || !nombreNuevo || nombreNuevo.trim() === '') {
+        return res.status(400).json({ error: 'El ID debe ser válido y el nombre no puede estar vacío.' });
     }
-
-    try{
-        producto.nombre = nombreNuevo;
-        await writeFile('./productos.json', JSON.stringify(productos, null, 2));
-        return res.status(200).json({ message: 'Nombre del producto actualizado' });
-    } catch (error) {
-        console.error('Error al actualizar el nombre del producto:', error);
-        return res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});
-
-// Modificar descripción de un producto
-router.put('/cambiarDescripcion', async (req, res) => {
-    const { id, descripcionNueva } = req.body;
-
-    const producto = productos.find(p => p.id === id);
-    if (!producto) {
-        return res.status(404).json({ error: 'Producto no encontrado' });
-    }
-
-    try{
-        productodescripcion = descripcionNueva;
-        await writeFile('./productos.json', JSON.stringify(productos, null, 2));
-        return res.status(200).json({ message: 'Descripción del producto actualizada' });
-    } catch (error) {
-        console.error('Error al actualizar la descripción del producto:', error);
-        return res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});
-
-// Modificar stock de un producto
-router.put('/cambiarStock', async (req, res) => {
-    const { id, stockNuevo } = req.body;
-
-    // Corregimos el bug lógico: validamos antes de asignar
-    let stockFinal = stockNuevo < 0 ? 0 : stockNuevo;
 
     try {
-        // findOneAndUpdate busca y actualiza en un solo paso
         const productoActualizado = await Producto.findOneAndUpdate(
-            { id: id },              // Filtro de búsqueda
-            { stock: stockFinal },   // Qué campo actualizar
-            { new: true }            // Devuelve el objeto ya modificado
+            { id: id },
+            { nombre: nombreNuevo },
+            { new: true }
         );
 
         if (!productoActualizado) {
-            return res.status(404).json({ error: 'Producto no encontrado' });
+            return res.status(404).json({ error: 'Producto no encontrado en MongoDB' });
         }
 
         return res.status(200).json({ 
-            message: 'Stock del producto actualizado',
+            message: 'Nombre del producto actualizado', 
             producto: productoActualizado 
         });
-        
     } catch (error) {
-        console.error('Error al actualizar el stock del producto:', error);
+        console.error('Error al actualizar el nombre:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
 
-// Modificar precio de un producto
 router.put('/cambiarPrecio', async (req, res) => {
     const { id, nuevoPrecio } = req.body;
 
@@ -180,7 +160,7 @@ router.put('/cambiarPrecio', async (req, res) => {
 
     try {
         const productoActualizado = await Producto.findOneAndUpdate(
-            { id: id },              // Filtramos por ID
+            { id: id },              // Filtramos por tu ID numérico
             { precio: nuevoPrecio }, // Actualizamos el campo precio
             { new: true }            // Pedimos que nos devuelva el objeto ya modificado
         );
@@ -200,33 +180,32 @@ router.put('/cambiarPrecio', async (req, res) => {
     }
 });
 
-// Eliminar un producto (verificación con ventas)
-router.delete('/:id', async (req, res) => {
-    const idProducto = parseInt(req.params.id);
+// Modificar descripción de un producto
+router.put('/cambiarDescripcion', async (req, res) => {
+    const id = parseInt(req.body.id);
+    const { descripcionNueva } = req.body;
+
+    if (isNaN(id) || !descripcionNueva || descripcionNueva.trim() === '') {
+        return res.status(400).json({ error: 'El ID debe ser válido y la descripción no puede estar vacía.' });
+    }
 
     try {
-        // 1. Verificamos si el producto existe en MongoDB
-        const producto = await Producto.findOne({ id: idProducto });
-        if (!producto) {
-            return res.status(404).json({ error: 'Producto no encontrado' });
+        const productoActualizado = await Producto.findOneAndUpdate(
+            { id: id },
+            { desc: descripcionNueva }, 
+            { new: true }
+        );
+
+        if (!productoActualizado) {
+            return res.status(404).json({ error: 'Producto no encontrado en MongoDB' });
         }
 
-        // 2. Buscamos directamente en Mongo si alguna venta tiene este id_producto
-        // Mongoose permite buscar dentro de arrays de objetos fácilmente
-        const productoVendido = await Venta.findOne({ "productos.id_producto": idProducto });
-
-        if (productoVendido) {
-            return res.status(409).json({
-                message: "No se puede eliminar el producto porque figura en ventas realizadas."
-            });
-        } 
-
-        // 3. Si no hay ventas, lo eliminamos de la base de datos
-        await Producto.deleteOne({ id: idProducto });
-        return res.status(200).json({ message: 'Producto eliminado exitosamente' });
-        
+        return res.status(200).json({ 
+            message: 'Descripción del producto actualizada', 
+            producto: productoActualizado 
+        });
     } catch (error) {
-        console.error('Error al eliminar el producto:', error);
+        console.error('Error al actualizar la descripción:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
