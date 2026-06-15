@@ -1,27 +1,23 @@
 import { Router } from "express";
-import { readFile, writeFile } from 'fs/promises';
+import Venta from '../models/Venta.js';
+import { verificarToken } from '../middlewares/auth.middleware.js'; // Importamos el verificadorde token
 
 const router = Router();
 
-// POST /ventas - Registrar una nueva orden de compra
-router.post('/', async (req, res) => {
-    const { usuarioEmail, productos } = req.body;
+// verificamos token en el medio. Si no hay token, la función async nunca se ejecuta.
+router.post('/', verificarToken, async (req, res) => {
+    // Extraemos el email directamente del token (req.user), es más seguro que tomar el que se envía en el body
+    const { productos } = req.body;
+    const usuarioEmail = req.user.email; 
 
-    // Validación básica
-    if (!usuarioEmail || !productos || productos.length === 0) {
-        return res.status(400).json({ error: "Datos de orden incompletos o carrito vacío." });
+    if (!productos || productos.length === 0) {
+        return res.status(400).json({ error: "Carrito vacío." });
     }
 
     try {
-        // Leer las ventas existentes
-        const ventasRaw = await readFile('./ventas.json', 'utf-8');
-        const ventas = JSON.parse(ventasRaw);
-
-        // Calcular el total real en el servidor para evitar fraudes
         let totalOrden = 0;
         const productosProcesados = productos.map(item => {
-            const subtotal = item.precio * item.cantidad;
-            totalOrden += subtotal;
+            totalOrden += item.precio * item.cantidad;
             return {
                 id_producto: item.id,
                 cantidad: item.cantidad,
@@ -29,20 +25,16 @@ router.post('/', async (req, res) => {
             };
         });
 
-        // Crear el objeto de la nueva venta
-        const nuevaVenta = {
-            id: ventas.length > 0 ? Math.max(...ventas.map(v => v.id)) + 1 : 501,
+        // Guardamos en MongoDB
+        const nuevaVenta = await Venta.create({
+            id: Date.now(),
             usuario_email: usuarioEmail,
-            fecha: new Date().toISOString().split('T')[0], // Guarda "YYYY-MM-DD"
+            fecha: new Date().toISOString().split('T')[0],
             total: totalOrden,
-            direccion: "Retiro en sucursal / A convenir", // por defecto (no implementado)
+            direccion: "Retiro en sucursal / A convenir",
             envioADomicilio: false,
             productos: productosProcesados
-        };
-
-        // Persistencia
-        ventas.push(nuevaVenta);
-        await writeFile('./ventas.json', JSON.stringify(ventas, null, 2));
+        });
 
         return res.status(201).json({
             message: "Orden de compra generada con éxito.",
@@ -50,7 +42,7 @@ router.post('/', async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error al procesar la orden de compra:", error);
+        console.error("Error al procesar compra:", error);
         return res.status(500).json({ error: "Error interno al procesar la compra." });
     }
 });

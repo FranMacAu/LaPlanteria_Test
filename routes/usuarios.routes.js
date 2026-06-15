@@ -1,9 +1,7 @@
 import { Router } from "express";
-import { readFile, writeFile } from 'fs/promises'
-
-//Lectura del JSON
-const usuariosData = await readFile('./data/usuarios.json', 'utf-8');
-const usuarios = JSON.parse(usuariosData);
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import Usuario from '../models/Usuario.js';
 
 const router = Router();
 
@@ -12,49 +10,36 @@ const router = Router();
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ error: "Email y contraseña son requeridos." });
-    }
-
     try {
-        const usuariosRaw = await readFile('./usuarios.json', 'utf-8');
-        const usuarios = JSON.parse(usuariosRaw);
-
-        // buscar user y pass
-        const usuarioValido = usuarios.find(u => u.email === email && u.password === password);
-
-        if (!usuarioValido) {
+        // 1. Buscamos al usuario en Mongo
+        const usuario = await Usuario.findOne({ email });
+        if (!usuario) {
             return res.status(401).json({ error: "El email o la contraseña son incorrectos." });
         }
-        
+
+        // 2. Comparamos la contraseña plana con el hash de la base de datos
+        const passwordValida = await bcrypt.compare(password, usuario.password);
+        if (!passwordValida) {
+            return res.status(401).json({ error: "El email o la contraseña son incorrectos." });
+        }
+
+        // 3. Generamos el JWT (Dura 2 horas)
+        const token = jwt.sign(
+            { id_usuario: usuario.id, email: usuario.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '2h' }
+        );
+
+        // 4. Enviamos el token al Frontend
         return res.status(200).json({
             message: "Login exitoso.",
-            usuario: {
-                id: usuarioValido.id,
-                email: usuarioValido.email
-            }
+            token, // Acá viaja la credencial
+            usuario
         });
 
     } catch (error) {
-        console.error("Error en el login del servidor:", error);
-        return res.status(500).json({ error: "Error interno del servidor al procesar el login." });
-    }
-});
-
-// consultar todos los usuarios
-router.get('/', (req, res) => {
-    res.json(usuarios);
-});
-
-// Consultar un usuario por ID
-router.get('/:usuario', async (req, res) => {
-    const id = parseInt(req.params.usuario);
-    
-    const result = usuarios.find(u => u.id === id);
-    if (result) {
-        res.status(200).json(result);
-    } else {
-        res.status(404).json({ message: 'Usuario no encontrado' });
+        console.error("Error en login:", error);
+        return res.status(500).json({ error: "Error interno del servidor." });
     }
 });
 
@@ -67,27 +52,24 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        const usuariosRaw = await readFile('./usuarios.json', 'utf-8');
-        const usuarios = JSON.parse(usuariosRaw);
-
-        // Evitar correos duplicados
-        const usuarioExiste = usuarios.some(u => u.email === email);
+        const usuarioExiste = await Usuario.findOne({ email });
         if (usuarioExiste) {
             return res.status(409).json({ error: "El correo ya se encuentra registrado." });
         }
 
-        // Creamos el nuevo usuario con ID incremental
-        const nuevoUsuario = {
-            id: usuarios.length > 0 ? Math.max(...usuarios.map(u => u.id)) + 1 : 1,
+        // Encriptamos la contraseña antes de guardarla
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Creamos el usuario en MongoDB
+        const nuevoUsuario = await Usuario.create({
+            id: Date.now(), // Generamos un ID numérico rápido
             nombre,
             apellido,
             email,
-            password,
-            esSocio: false // Todos arrancan como no socios por defecto
-        };
-
-        usuarios.push(nuevoUsuario);
-        await writeFile('./usuarios.json', JSON.stringify(usuarios, null, 2));
+            password: hashedPassword,
+            esSocio: false
+        });
 
         return res.status(201).json({ message: "Usuario registrado con éxito." });
 
@@ -96,5 +78,22 @@ router.post('/', async (req, res) => {
         return res.status(500).json({ error: "Error interno del servidor al registrar." });
     }
 });
+
+// SOLO PRUEBA:consultar todos los usuarios
+// router.get('/', (req, res) => {
+//     res.json(usuarios);
+// });
+
+// SOLO PRUEBA:Consultar un usuario por ID
+// router.get('/:usuario', async (req, res) => {
+//     const id = parseInt(req.params.usuario);
+    
+//     const result = usuarios.find(u => u.id === id);
+//     if (result) {
+//         res.status(200).json(result);
+//     } else {
+//         res.status(404).json({ message: 'Usuario no encontrado' });
+//     }
+// });
 
 export default router;
