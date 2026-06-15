@@ -210,4 +210,35 @@ router.put('/cambiarDescripcion', async (req, res) => {
     }
 });
 
+// Eliminar producto por id
+router.delete('/:id', async (req, res) => {
+    const idProducto = parseInt(req.params.id);
+
+    if (isNaN(idProducto)) {
+        return res.status(400).json({ error: 'El ID debe ser un número válido.' });
+    }
+
+    try {
+        const producto = await Producto.findOne({ id: idProducto });
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
+        }
+
+        const productoVendido = await Venta.findOne({ "productos.id_producto": idProducto });
+
+        if (productoVendido) {
+            return res.status(409).json({
+                message: "No se puede eliminar el producto porque figura en ventas realizadas."
+            });
+        } 
+
+        await Producto.deleteOne({ id: idProducto });
+        return res.status(200).json({ message: 'Producto eliminado exitosamente' });
+        
+    } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 export default router;
