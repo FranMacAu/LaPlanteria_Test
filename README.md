@@ -9,6 +9,9 @@ Proyecto: LA PLANTERÍA
 Colegio Universitario IES 21
 
 *************************************
+**Despliegue**
+Para desplegar localmente el proyecto, en este repositorio se debe ejecutar le comando 'pnpm dev' en la terminal. Luego de eso, se puede ejecutar localmente el repositorio https://github.com/FranMacAu/APPWEB a través de LiveServer (corriendo en el puerto 5500), o bien ingresar a https://appweb-two.vercel.app/ que es donde está desplegado el front (de todas formas continúa siendo local, ya que desde la web se apunta al localhost).
+
 **ENTREGA 16/05**
 
 **--Cambios relacionados con el front:**
