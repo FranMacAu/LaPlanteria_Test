@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import { readFile } from 'fs/promises';
-import { connectDB } from '../config/db.js';
+import { connectDB } from '../../config/db.js';
 
-import Usuario from '../models/Usuario.js';
-import Producto from '../models/Producto.js';
-import Categoria from '../models/Categoria.js';
-import Venta from '../models/Venta.js';
+import Usuario from '../../models/Usuario.js';
+import Producto from '../../models/Producto.js';
+import Categoria from '../../models/Categoria.js';
+import Venta from '../../models/Venta.js';
 
 const migrarDatos = async () => {
     try {

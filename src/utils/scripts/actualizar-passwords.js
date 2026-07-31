@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
-import { connectDB } from '../config/db.js';
-import Usuario from '../models/Usuario.js';
+import { connectDB } from '../../config/db.js';
+import Usuario from '../../models/Usuario.js';
 
 const actualizarContrasenas = async () => {
     try {
